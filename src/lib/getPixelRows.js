@@ -29,9 +29,9 @@ pixelRows.get24bitPixelRow = (rowOfBytes) => {
   for (let pixel = 0; pixel < pixelsPerRow; pixel++) {
     const offset = pixel * 3;
     const pixelVal = {
-      red: rowOfBytes.readUInt8(offset + 0),
+      blue: rowOfBytes.readUInt8(offset + 0),
       green: rowOfBytes.readUInt8(offset + 1),
-      blue: rowOfBytes.readUInt8(offset + 2),
+      red: rowOfBytes.readUInt8(offset + 2),
     };
     pixelRow.push(pixelVal);
   }

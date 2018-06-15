@@ -2,9 +2,7 @@
 
 const fs = require('fs');
 
-//const parseArgs = module.exports = {};
-
-const invokePath = (cmdPath) => {
+const getInvokePath = (cmdPath) => {
   return cmdPath.slice(0, cmdPath.lastIndexOf('/'));
 };
 
@@ -17,8 +15,8 @@ module.exports = class Args {
       { 
         node: argv[0], 
         command: argv[1],
-        inputFile: `${invokePath(argv[1])}/${argv[2]}`,
-        outputFIle: `${invokePath(argv[1])}/${argv[3]}`, 
+        inputFile: `${getInvokePath(argv[1])}/${argv[2]}`,
+        outputFIle: `${getInvokePath(argv[1])}/${argv[3]}`, 
         transform: argv[4],
       }
     );
