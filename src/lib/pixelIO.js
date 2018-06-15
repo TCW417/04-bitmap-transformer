@@ -37,24 +37,16 @@ pixelRows.get24bitPixelRow = (rowOfBytes) => {
 };
 
 pixelRows.write24bitPixelTable = (bitmap, buffer) => {
-  console.log('write24bitPixelTable');
-  const ct = bitmap.colorTable();
-  console.log('write24 ct dims', ct.length, 'rows by', ct[0].length, 'cols');
-  console.log('write24, offset of color table', bitmap.pixelArrayLoc, 'row length', bitmap.rowSize);
-  let x = 50;
+  const ct = bitmap.colorTable;
   for (let row = 0; row < ct.length; row++) {
     const rowOffset = bitmap.pixelArrayLoc + (row * bitmap.rowSize);
-    if (x-- > 0) console.log('      rowOffset', rowOffset);
     for (let col = 0; col < ct[row].length; col++) {
       const colOffset = rowOffset + (col * 3);
-      if (x-- > 0) console.log('      colOffset:', colOffset, row, col);
       buffer.writeUInt8(ct[row][col].blue, colOffset);
       buffer.writeUInt8(ct[row][col].green, colOffset + 1);
       buffer.writeUInt8(ct[row][col].red, colOffset + 2);
     }
-    // are padding bytes needed?
-    if (x-- > 0) console.log('padding?', bitmap.rowSize - (ct[row].length * 3));
-    for (let p = 0; p < bitmap.rowSize - (ct[row].length * 3); p++) {
+    for (let p = 0; p < bitmap.rowPadding; p++) {
       buffer.writeUInt8(0, ct[row].length + p);
     }
   }
