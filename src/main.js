@@ -23,7 +23,7 @@ const validateFileAttribs = (data) => {
     console.log('ERROR: Image file not 24bit color depth.');
   }
   // bmp at this point is something we can work with
-  trans.doTransform(args.transform);
+  trans.doTransform(args.transform, bmp);
 
   file.writeBmp(args.outputFile, bmp, (err) => {
     console.log('ERROR: Unable to write output file');
