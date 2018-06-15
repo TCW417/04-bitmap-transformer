@@ -1,6 +1,6 @@
 'use strict';
 
-const pr = require('../lib/getPixelRows');
+const pr = require('../lib/pixelRowIO');
 
 // size of file bitmap header = 14 bytes
 // size of DIB header = 12 bytes
@@ -55,15 +55,11 @@ const Bitmap = module.exports = class {
           getPixelRow = pr.get32bitPixelRow;
       } 
 
-      let x = 5;
-      console.log('length', rowLength, 'numRows', numRows, 'buffer len', buffer.length);
       for (let row = 0; row < numRows; row++) {
-        // if (x-- > 0) console.log('offset', row * rowLength, 'length', rowLength + (row * rowLength));
         pixelArray[row] = getPixelRow(buffer.slice(row * rowLength, rowLength + (row * rowLength)));
       }
       return pixelArray;
     };
-    // this.colorTable = some method from the Buffer class that passes in the colorTableOffset variable and the colorTableLength so you can just access that portion of the buffer at that offset and manipulate that data 
   }
 
   // possible methods

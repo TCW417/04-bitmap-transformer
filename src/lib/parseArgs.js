@@ -6,7 +6,7 @@ const getInvokePath = (cmdPath) => {
   return cmdPath.slice(0, cmdPath.lastIndexOf('/'));
 };
 
-const validTransforms = ['foo', 'rotate', 'mirror'];
+const validTransforms = ['addRed', 'rotate', 'mirror'];
 
 module.exports = class Args {
   constructor(argv) {
@@ -16,9 +16,9 @@ module.exports = class Args {
         node: argv[0], 
         command: argv[1],
         inputFile: `${getInvokePath(argv[1])}/${argv[2]}`,
-        outputFIle: `${getInvokePath(argv[1])}/${argv[3]}`, 
+        outputFile: `${getInvokePath(argv[1])}/${argv[3]}`, 
         transform: argv[4],
-      }
+      },
     );
   }
 
