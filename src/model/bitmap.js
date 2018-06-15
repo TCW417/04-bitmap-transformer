@@ -15,10 +15,13 @@ const Bitmap = module.exports = class {
     const bitmapHeightOffset = 22;
     const colorPlanesOffset = 26;
     const bitsPerPixelOffset = 28;
-    // TODO: find which decimal number the colorTableOffset starts at
-    // const colorTableOffset;
+    const compressionMethodOffset = 30;
+    const rawBitmapDataSizeOffset = 34;
+    const bitmapInfoHeaderSizeOffset = 14;
 
     this.header = buffer.toString('ascii', headerOffset, 2);
+    if (this.header !== 'BM') throw new Error(`Unrecognized header typedf ${this.header}.`);
+
     this.fileSize = buffer.readUInt32LE(fileSizeOffset);
     this.pixelArrayLoc = buffer.readUInt32LE(pixelArrayLocOffset);
     this.height = buffer.readUInt16LE(bitmapHeightOffset);
@@ -27,12 +30,15 @@ const Bitmap = module.exports = class {
     this.bitsPerPixel = buffer.readUInt16LE(bitsPerPixelOffset);
     this.rowSize = Math.floor(((this.bitsPerPixel * this.width) + 31) / 32) * 4;
     this.pixelArraySize = this.rowSize * Math.abs(this.height);
-    // this.colorTable = buffer.slice(this.pixelArrayLoc, 100);
+    this.compressionMethod = buffer.readUInt32LE(compressionMethodOffset);
+    // if (this.compressionMethod !== 0) throw new Error('Compressed images not supported.');
+    this.rawBitmapDataSize = buffer.readUInt32LE(rawBitmapDataSizeOffset);
+    this.bitmapInfoHeaderSize = buffer.readUInt32LE(bitmapInfoHeaderSizeOffset);
+
     this.colorTable = () => {
       const pixelArray = [];
       const rowLength = this.rowSize; 
       const numRows = this.height;
-      let pixelOffset = this.pixelArrayLoc;
       let getPixelRow;
 
       switch (this.bitsPerPixel) {
@@ -49,8 +55,11 @@ const Bitmap = module.exports = class {
           getPixelRow = pr.get32bitPixelRow;
       } 
 
+      let x = 5;
+      console.log('length', rowLength, 'numRows', numRows, 'buffer len', buffer.length);
       for (let row = 0; row < numRows; row++) {
-        pixelArray[row] = getPixelRow(buffer.slice(row * rowLength, rowLength));
+        // if (x-- > 0) console.log('offset', row * rowLength, 'length', rowLength + (row * rowLength));
+        pixelArray[row] = getPixelRow(buffer.slice(row * rowLength, rowLength + (row * rowLength)));
       }
       return pixelArray;
     };
