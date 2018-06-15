@@ -1,13 +1,9 @@
 'use strict';
 
-const pr = require('../lib/getPixelRows');
-
-// size of file bitmap header = 14 bytes
-// size of DIB header = 12 bytes
+const pr = require('../lib/pixelIO');
 
 const Bitmap = module.exports = class {
   constructor(buffer) {
-    // console.log('in constructor', buffer);
     const headerOffset = 0;
     const fileSizeOffset = 2;
     const pixelArrayLocOffset = 10;
@@ -15,10 +11,13 @@ const Bitmap = module.exports = class {
     const bitmapHeightOffset = 22;
     const colorPlanesOffset = 26;
     const bitsPerPixelOffset = 28;
-    // TODO: find which decimal number the colorTableOffset starts at
-    // const colorTableOffset;
+    const compressionMethodOffset = 30;
+    const rawBitmapDataSizeOffset = 34;
+    const bitmapInfoHeaderSizeOffset = 14;
 
     this.header = buffer.toString('ascii', headerOffset, 2);
+    if (this.header !== 'BM') throw new Error(`Unrecognized header typedf ${this.header}.`);
+
     this.fileSize = buffer.readUInt32LE(fileSizeOffset);
     this.pixelArrayLoc = buffer.readUInt32LE(pixelArrayLocOffset);
     this.height = buffer.readUInt16LE(bitmapHeightOffset);
@@ -27,12 +26,14 @@ const Bitmap = module.exports = class {
     this.bitsPerPixel = buffer.readUInt16LE(bitsPerPixelOffset);
     this.rowSize = Math.floor(((this.bitsPerPixel * this.width) + 31) / 32) * 4;
     this.pixelArraySize = this.rowSize * Math.abs(this.height);
-    // this.colorTable = buffer.slice(this.pixelArrayLoc, 100);
-    this.colorTable = () => {
+    this.compressionMethod = buffer.readUInt32LE(compressionMethodOffset);
+    this.rawBitmapDataSize = buffer.readUInt32LE(rawBitmapDataSizeOffset);
+    this.bitmapInfoHeaderSize = buffer.readUInt32LE(bitmapInfoHeaderSizeOffset);
+    this.rowPadding = this.rowSize - (this.width * (this.bitsPerPixel / 8));
+
+    const buildColorTable = () => {
       const pixelArray = [];
-      const rowLength = this.rowSize; 
       const numRows = this.height;
-      let pixelOffset = this.pixelArrayLoc;
       let getPixelRow;
 
       switch (this.bitsPerPixel) {
@@ -48,13 +49,15 @@ const Bitmap = module.exports = class {
         default:
           getPixelRow = pr.get32bitPixelRow;
       } 
-
       for (let row = 0; row < numRows; row++) {
-        pixelArray[row] = getPixelRow(buffer.slice(row * rowLength, rowLength));
+        const sliceStart = this.pixelArrayLoc + (row * this.rowSize) + (row * this.rowPadding);
+        const sliceEnd = sliceStart + this.rowSize;
+        pixelArray[row] = getPixelRow(buffer.slice(sliceStart, sliceEnd));
       }
       return pixelArray;
     };
-    // this.colorTable = some method from the Buffer class that passes in the colorTableOffset variable and the colorTableLength so you can just access that portion of the buffer at that offset and manipulate that data 
+
+    this.colorTable = buildColorTable();
   }
 
   // possible methods
