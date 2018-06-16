@@ -13,6 +13,6 @@ fo.readBmp = (fd, callback) => {
 
 fo.writeBmp = (fd, data) => {
   fs.writeFile(fd, data, (err) => {
-    throw err;
+    if (err) throw err;
   });
 };

@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const t = require('./transforms');
 
 const getInvokePath = (cmdPath) => {
   return cmdPath.slice(0, cmdPath.lastIndexOf('/'));
@@ -35,7 +36,7 @@ module.exports = class Args {
       console.log(`ERROR: Output file already exists.\n    Path ${this.outputFile}`);
       return false;
     }
-    if (!validTransforms.includes(this.transform)) {
+    if (!t.validTransforms.includes(this.transform)) {
       console.log(`ERROR: Transform not recognized: ${this.transform}\n    Valid transforms: ${validTransforms.join(',')}`);
       return false;
     }
