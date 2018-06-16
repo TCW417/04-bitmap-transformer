@@ -2,7 +2,9 @@
 
 const trans = module.exports = {};
 
-trans.validTransforms = ['addRed', 'addBorder', 'flipH', 'saggyButt'];
+trans.validTransforms = ['addRed', 'addBorder', 'flipH', 'FB'];
+// don't publish hidden transforms in help text
+trans.validLength = trans.validTransforms.length - 1; 
 
 const addRed = (bitmap) => {
   const ct = bitmap.colorTable;

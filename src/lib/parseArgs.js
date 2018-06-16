@@ -7,8 +7,6 @@ const getInvokePath = (cmdPath) => {
   return cmdPath.slice(0, cmdPath.lastIndexOf('/'));
 };
 
-const validTransforms = ['addRed', 'rotate', 'mirror'];
-
 module.exports = class Args {
   constructor(argv) {
     Object.assign(
@@ -37,7 +35,8 @@ module.exports = class Args {
       return false;
     }
     if (!t.validTransforms.includes(this.transform)) {
-      console.log(`ERROR: Transform not recognized: ${this.transform}\n    Valid transforms: ${validTransforms.join(',')}`);
+      console.log(`ERROR: Transform not recognized: ${this.transform}`);
+      console.log(`    Valid transforms: ${t.validTransforms.slice(0, t.validLength).join(',')}`);
       return false;
     }
     return true;
