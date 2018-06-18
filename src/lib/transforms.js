@@ -70,6 +70,18 @@ const saggyButt = (bitmap) => {
     }
   }
 };
+//Grayscale
+const grayscale = (colors) => {
+  colors = colors.map((rgba) => {
+    let gray = (rgba[0] + rgba[1] +rgba[2])/3;
+    let i = 0;
+    while(i < 3) {
+      rgba[i] = gray;
+      i++;
+    }
+    return rgba;
+  });
+}
 
 trans.doTransform = (transform, bitmap) => {
   switch (transform) {

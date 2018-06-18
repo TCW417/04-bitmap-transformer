@@ -29,5 +29,8 @@
     "eslint-plugin-jest": "^21.17.0",
     "jest": "^23.1.0"
   },
-  "homepage": "https://github.com/TCW417/04-bitmap-transformer#readme"
+  "homepage": "https://github.com/TCW417/04-bitmap-transformer#readme",
+  "dependencies": {
+    "eslintrc": "^1.0.6"
+  }
 }
