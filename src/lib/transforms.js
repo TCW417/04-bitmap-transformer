@@ -70,13 +70,26 @@ const saggyButt = (bitmap) => {
     }
   }
 };
+
 //Grayscale
-const grayscale = (colors) => {
+const grayScale = (colors) => {
   colors = colors.map((rgba) => {
     let gray = (rgba[0] + rgba[1] +rgba[2])/3;
     let i = 0;
     while(i < 3) {
       rgba[i] = gray;
+      i++;
+    }
+    return rgba;
+  });
+}
+
+//INVERT COLORS
+const invert = (colors) => {
+  colors = colors.map((rgba) => {
+    let i = 0;
+    while (i < 3) {
+      rgba[i] = 255 - rgba[i];
       i++;
     }
     return rgba;
@@ -96,6 +109,12 @@ trans.doTransform = (transform, bitmap) => {
       break;
     case 'saggyButt':
       saggyButt(bitmap);
+      break;
+    case 'grayScale':
+      grayScale(colors);
+      break;
+    case 'invert':
+      invert(colors);
       break;
     default:
       console.log(`Sorry, transform ${transform} not yet implemented.`);
