@@ -2,7 +2,7 @@
 
 const trans = module.exports = {};
 
-trans.validTransforms = ['addRed', 'addBorder', 'flipH', 'FB'];
+trans.validTransforms = ['addBorder', 'flipH', 'flipV', 'hMirror', 'addRed', 'FB'];
 // don't publish hidden transforms in help text
 trans.validLength = trans.validTransforms.length - 1; 
 
@@ -57,8 +57,22 @@ const flipH = (bitmap) => {
   }
 };
 
-const saggyButt = (bitmap) => {
+const flipV = (bitmap) => {
   // reverse the pixel array along the horizontal axis POORLY ;-)
+  const ct = bitmap.colorTable;
+  const vLine = Math.floor(bitmap.width / 2);
+  let temp;
+  for (let row = 0; row < bitmap.height - 1; row++) {
+    for (let col = 0, colC = bitmap.width - 1; col < vLine; col += 1, colC -= 1) {
+      temp = ct[row][col];
+      ct[row][col] = ct[row][colC];
+      ct[row][colC] = temp;
+    }
+  }
+};
+
+const FB = (bitmap) => {
+  // mirror the pixel array along the horizontal axis
   const ct = bitmap.colorTable;
   const hLine = Math.floor(bitmap.height / 2);
   let temp;
@@ -82,8 +96,14 @@ trans.doTransform = (transform, bitmap) => {
     case 'flipH':
       flipH(bitmap);
       break;
-    case 'saggyButt':
-      saggyButt(bitmap);
+    case 'hMirror':
+      FB(bitmap);
+      break;
+    case 'flipV':
+      flipV(bitmap);
+      break;
+    case 'FB':
+      FB(bitmap);
       break;
     default:
       console.log(`Sorry, transform ${transform} not yet implemented.`);

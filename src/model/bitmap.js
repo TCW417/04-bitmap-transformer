@@ -2,7 +2,7 @@
 
 const pr = require('../lib/pixelIO');
 
-const Bitmap = module.exports = class {
+const Bitmap = module.exports = class { /* eslint-disable-line */
   constructor(buffer) {
     const headerOffset = 0;
     const fileSizeOffset = 2;

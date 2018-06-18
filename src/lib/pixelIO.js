@@ -3,7 +3,6 @@
 const pixelRows = module.exports = {};
 
 pixelRows.get8bitPixelRow = (rowOfBytes) => {
-
   const pixelRow = [];
   const rowLength = rowOfBytes.length;
   for (let pixel = 0; pixel < rowLength; pixel += 1) {
