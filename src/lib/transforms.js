@@ -18,6 +18,7 @@ trans.doTransform = (transform, bitmap) => {
       break;
     default:
       console.log(`Sorry, transform ${transform} not yet implemented.`);
-      break;
+      break; 
   }
 };
+
