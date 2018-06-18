@@ -2,7 +2,7 @@
 
 const trans = module.exports = {};
 
-trans.validTransforms = ['addRed', 'addBorder', 'flipH', 'FB'];
+trans.validTransforms = ['addRed', 'addBorder', 'flipH', 'FB', 'grayScale', 'invert'];
 // don't publish hidden transforms in help text
 trans.validLength = trans.validTransforms.length - 1; 
 
