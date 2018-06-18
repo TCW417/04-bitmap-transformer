@@ -1,10 +1,9 @@
 'use strict';
 
 const pixelRows = module.exports = {};
-let x = 5;
+
 pixelRows.get8bitPixelRow = (rowOfBytes) => {
 
-  // if (x-- > 0) console.log('get 8 buffer len', rowOfBytes.length); /* eslint-disable-line */
   const pixelRow = [];
   const rowLength = rowOfBytes.length;
   for (let pixel = 0; pixel < rowLength; pixel += 1) {
@@ -25,7 +24,6 @@ pixelRows.get16bitPixelRow = (rowOfBytes) => {
 pixelRows.get24bitPixelRow = (rowOfBytes) => {
   const pixelRow = [];
   const pixelsPerRow = Math.floor(rowOfBytes.length / 3);
-  if (x-- > 0) console.log('get 24 buffer len', rowOfBytes.length, 'pixelsPerRow', pixelsPerRow); 
   for (let pixel = 0; pixel < pixelsPerRow; pixel++) {
     const offset = pixel * 3;
     const pixelVal = {
@@ -38,9 +36,23 @@ pixelRows.get24bitPixelRow = (rowOfBytes) => {
   return pixelRow;
 };
 
-pixelRows.get32bitPixelRow = (rowOfBytes) => {
-  // if (x-- > 0) console.log('get 32 buffer len', rowOfBytes.length); /* eslint-disable-line */
+pixelRows.write24bitPixelTable = (bitmap, buffer) => {
+  const ct = bitmap.colorTable;
+  for (let row = 0; row < ct.length; row++) {
+    const rowOffset = bitmap.pixelArrayLoc + (row * bitmap.rowSize);
+    for (let col = 0; col < ct[row].length; col++) {
+      const colOffset = rowOffset + (col * 3);
+      buffer.writeUInt8(ct[row][col].blue, colOffset);
+      buffer.writeUInt8(ct[row][col].green, colOffset + 1);
+      buffer.writeUInt8(ct[row][col].red, colOffset + 2);
+    }
+    for (let p = 0; p < bitmap.rowPadding; p++) {
+      buffer.writeUInt8(0, ct[row].length + p);
+    }
+  }
+};
 
+pixelRows.get32bitPixelRow = (rowOfBytes) => {
   const pixelRow = [];
   const pixelsPerRow = rowOfBytes.length / 4;
   for (let pixel = 0; pixel < pixelsPerRow; pixel++) {
