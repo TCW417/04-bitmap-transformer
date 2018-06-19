@@ -2,7 +2,7 @@
 
 const pr = require('../lib/pixelIO');
 
-const Bitmap = module.exports = class {
+const Bitmap = module.exports = class { /* eslint-disable-line */
   constructor(buffer) {
     const headerOffset = 0;
     const fileSizeOffset = 2;
@@ -31,7 +31,7 @@ const Bitmap = module.exports = class {
     this.bitmapInfoHeaderSize = buffer.readUInt32LE(bitmapInfoHeaderSizeOffset);
     this.rowPadding = this.rowSize - (this.width * (this.bitsPerPixel / 8));
 
-    const buildColorTable = () => {
+    const buildPixelArray = () => {
       const pixelArray = [];
       const numRows = this.height;
       let getPixelRow;
@@ -57,7 +57,7 @@ const Bitmap = module.exports = class {
       return pixelArray;
     };
 
-    this.colorTable = buildColorTable();
+    this.pixelArray = buildPixelArray();
   }
 
   // possible methods
