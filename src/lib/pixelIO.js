@@ -2,24 +2,6 @@
 
 const pixelRows = module.exports = {};
 
-pixelRows.get8bitPixelRow = (rowOfBytes) => {
-  const pixelRow = [];
-  const rowLength = rowOfBytes.length;
-  for (let pixel = 0; pixel < rowLength; pixel += 1) {
-    pixelRow.push(0 + rowOfBytes.readUInt8(pixel));
-  }
-  return pixelRow;
-};
-
-pixelRows.get16bitPixelRow = (rowOfBytes) => {
-  const pixelRow = [];
-  const rowLength = rowOfBytes.length / 2;
-  for (let pixel = 0; pixel < rowLength; pixel += 2) {
-    pixelRow.push(0 + rowOfBytes.readUInt16LE(pixel));
-  }
-  return pixelRow;
-};
-
 pixelRows.get24bitPixelRow = (rowOfBytes) => {
   const pixelRow = [];
   const pixelsPerRow = Math.floor(rowOfBytes.length / 3);
@@ -36,7 +18,7 @@ pixelRows.get24bitPixelRow = (rowOfBytes) => {
 };
 
 pixelRows.write24bitPixelTable = (bitmap, buffer) => {
-  const ct = bitmap.colorTable;
+  const ct = bitmap.pixelArray;
   for (let row = 0; row < ct.length; row++) {
     const rowOffset = bitmap.pixelArrayLoc + (row * bitmap.rowSize);
     for (let col = 0; col < ct[row].length; col++) {
@@ -49,13 +31,4 @@ pixelRows.write24bitPixelTable = (bitmap, buffer) => {
       buffer.writeUInt8(0, ct[row].length + p);
     }
   }
-};
-
-pixelRows.get32bitPixelRow = (rowOfBytes) => {
-  const pixelRow = [];
-  const pixelsPerRow = rowOfBytes.length / 4;
-  for (let pixel = 0; pixel < pixelsPerRow; pixel++) {
-    pixelRow.push(rowOfBytes.readUInt32LE(pixel * 4));
-  }
-  return pixelRow;
 };
