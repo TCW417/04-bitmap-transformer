@@ -16,5 +16,3 @@ fo.writeBmp = (fd, data) => {
     if (err) throw err;
   });
 };
-
-

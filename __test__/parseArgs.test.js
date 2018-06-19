@@ -8,7 +8,3 @@ describe('parseArgs function tests', () => {
     expect(argv.validInputs()).toEqual(false);
   });
 });
-
-
-
-
