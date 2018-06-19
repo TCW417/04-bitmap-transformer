@@ -1,72 +1,52 @@
-![CF](https://camo.githubusercontent.com/70edab54bba80edb7493cad3135e9606781cbb6b/687474703a2f2f692e696d6775722e636f6d2f377635415363382e706e67) Lab 04: Bitmap Transformer
-===
+https://travis-ci.org/TCW417/04-bitmap-transformer.svg?branch=master)](https://travis-ci.org/TCW417/04-bitmap-transformer)
 
-## Submission Instructions
-* Work in a fork of this repository
-* Work in a branch on your fork called `lab-04`
-* Set up Travis CI on your forked repository
-* Open a pull request to your forked repository
-* Submit on canvas a question and observation, how long you spent, and a link to your pull request
+Describe the exported values of each module you have defined. Every function description should include it's arity (expected number of parameter), the expected data for each parameter (data-type and limitations), and it's behavior (for both valid and invalued use).
 
-## Resources  
-* [Bitmap Specification](https://en.wikipedia.org/wiki/BMP_file_format)
-* [Buffer Docs](https://nodejs.org/api/buffer.html)
+buildPixelArray
+- Arity - 0
+- Use: builds our array of pixels that we can manipulate
 
-## Configuration 
-Configure the root of your repository with the following files and directories. Thoughfully name and organize any aditional configuration or module files.
-* **README.md** - contains documentation
-* **.gitignore** - contains a [robust](http://gitignore.io) `.gitignore` file 
-* **.eslintrc** - contains the course linter configuratoin
-* **.eslintignore** - contains the course linter ignore configuration
-* **package.json** - contains npm package config
-  * create a `lint` script for running eslint
-  * create a `test` script for running tests
-* **lib/** - contains module definitions
-* **\_\_test\_\_/asset/** - contains bitmaps for testing
-* **\_\_test\_\_/** - contains unit tests
+pixelRows.get24bitPixelRow
+- Arity - 1
+- Parameter data type - array
+- Expected data - an array that is our pixelRow
 
-## Feature Tasks
-For this assignment you will be building a bitmap (`.bmp`) transformer CLI. It will read a bitmap in from disk, run one or more color or raster transforms and then write it out to a new file. This project will require the use of node buffers in order to manipulate binary data. Your solution should be composed of small tested modules that solve specific problems. Your modules should be thoughfuly named and well documented. The entry point to your CLI should be an index.js file in the root of your package, and all helper modules should be placed in your lib/ directory. Your bitmap transformer modules should not use any third party librarys.
+pixelRows.write24bitPixelTable
+- Arity - 2
+- Parameters - bitmap object, buffer array
 
-#### Minimum Requirements
-* The CLI should be architected using best modularization practices
-* The CLI should require at least three arguments `input-file-path output-file-path transfrom-name` 
-* The CLI should support a minimum of four transforms
-* The CLI should log useful Error messages if used incorrectly
-* The CLI should log a success message on completion
+addRed
+- Arity - 1 
+- Parameter - bitmap object
+- Expected output for valid use - change the targeted element named red in bitmap.pixelArray to 255, 
+  - expected output is alteration of bitmap image to red 
+- Expected output for invalid use - no change in bitmap image color, change in bitmap image to a color other than red and value other than 255 on the red element
 
-## Testing 
-* Use `describe` and `test (or it)` methods to define discriptive tests and increase readablity
-* Each `test` callback should aim to test a small well defined feature of a function
-* Write tests to ensure each function behaves correctly with valid and invalud inputs
-* The CLI should be tested without using `child_process` or any equivilant third party libraries
+addBorder
+- Arity - 1
+- Parameter - bitmap object
+- Expected output for valid use - change the targeted row and column of pixels to 255 on the red value of the object to achieve a red border
+- Expected output for invalid use - no change in bitmap image color, change in bitmap image to a color other than red and value other than 255 on the red element
 
-##  Documentation
-Please include your Travis CI build badge at the top of your README. Describe the exported values of each module you have defined. Every function description should include it's arity (expected number of parameter), the expected data for each parameter (data-type and limitations), and it's behavior (for both valid and invalued use). Feel free to write any additional information in your README.md.
+flipH
+- Arity - 1
+- Parameter - bitmap object
+- Expected output - flip bitmap image horizontally, resetting the row and columns to their inverse
 
-## Tips
-You will want to define a strategy for solving the problem before you begin to code. Once you have a strategy defined, you can break it into steps that can be split into helper modules. Each helper module should solve a small specific problem. The main module should utilize the helper modules to execute your original stratagy.
+flipV
+- Arity - 1
+- Parameter - bitmap object
+- Expected output - flip bitmap image vertically, resetting the row and columns to their inverse
 
-###### Example Stragegy 
-0. Gather user input (infile, outfile, and transform)
-0. Read the input bitmap file using the fs module 
-0. Parse the bitmap's buffer into object represeting a bitmap (using a constructor)
-0. Using metadata from the parsed bitmap object run a transform on the buffer directly (mutate the color or raster data)
-0. Write the mutated buffer to the output file path
+FB {
+  - Arity - 1
+- Parameter - bitmap object
+- Expected output - bitmap image will be mirrored along the horizontal axis
 
-###### Transfrom Ideas
-* Color Pallet Transforms 
-  * Invert 
-  * Randomize
-  * Black and White
-  * Darken or Lighten
-  * Add or Mutiply a Hue
-  * Add or Subtract Contrast
-  
-* Raster Data Transforms
-  * Pixilate
-  * Add a border
-  * Add a watermark
-  * Vertically or Horizontaly Filp
-  * Verticaly or Horizontaly Mirror
-  * Verticaly or Horizontaly Stretch
+}
+
+
+
+
+
+

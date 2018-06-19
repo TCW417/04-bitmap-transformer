@@ -2,11 +2,7 @@
 
 const trans = module.exports = {};
 
-<<<<<<< HEAD
-trans.validTransforms = ['addRed', 'addBorder', 'flipH', 'FB', 'grayScale', 'invert'];
-=======
 trans.validTransforms = ['addBorder', 'flipH', 'flipV', 'hMirror', 'addRed', 'FB'];
->>>>>>> 2ae1fa1d367b51564abea2b91192bc960dd63fc6
 // don't publish hidden transforms in help text
 trans.validLength = trans.validTransforms.length - 1; 
 
@@ -89,30 +85,30 @@ const FB = (bitmap) => {
   }
 };
 
-//Grayscale
-const grayScale = (colors) => {
-  colors = colors.map((rgba) => {
-    let gray = (rgba[0] + rgba[1] +rgba[2])/3;
-    let i = 0;
-    while(i < 3) {
-      rgba[i] = gray;
-      i++;
-    }
-    return rgba;
-  });
-}
+// //Grayscale
+// const grayScale = (colors) => {
+//   colors = colors.map((rgba) => {
+//     let gray = (rgba[0] + rgba[1] +rgba[2])/3;
+//     let i = 0;
+//     while(i < 3) {
+//       rgba[i] = gray;
+//       i++;
+//     }
+//     return rgba;
+//   });
+// }
 
-//INVERT COLORS
-const invert = (colors) => {
-  colors = colors.map((rgba) => {
-    let i = 0;
-    while (i < 3) {
-      rgba[i] = 255 - rgba[i];
-      i++;
-    }
-    return rgba;
-  });
-}
+// //INVERT COLORS
+// const invert = (colors) => {
+//   colors = colors.map((rgba) => {
+//     let i = 0;
+//     while (i < 3) {
+//       rgba[i] = 255 - rgba[i];
+//       i++;
+//     }
+//     return rgba;
+//   });
+// }
 
 trans.doTransform = (transform, bitmap) => {
   switch (transform) {
@@ -134,12 +130,12 @@ trans.doTransform = (transform, bitmap) => {
     case 'FB':
       FB(bitmap);
       break;
-    case 'grayScale':
-      grayScale(colors);
-      break;
-    case 'invert':
-      invert(colors);
-      break;
+    // case 'grayScale':
+    //   grayScale(colors);
+    //   break;
+    // case 'invert':
+    //   invert(colors);
+    //   break;
     default:
       console.log(`Sorry, transform ${transform} not yet implemented.`);
       break;
