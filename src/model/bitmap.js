@@ -31,7 +31,7 @@ const Bitmap = module.exports = class { /* eslint-disable-line */
     this.bitmapInfoHeaderSize = buffer.readUInt32LE(bitmapInfoHeaderSizeOffset);
     this.rowPadding = this.rowSize - (this.width * (this.bitsPerPixel / 8));
 
-    const buildColorTable = () => {
+    const buildPixelArray = () => {
       const pixelArray = [];
       const numRows = this.height;
       let getPixelRow;
@@ -57,7 +57,7 @@ const Bitmap = module.exports = class { /* eslint-disable-line */
       return pixelArray;
     };
 
-    this.colorTable = buildColorTable();
+    this.pixelArray = buildPixelArray();
   }
 
   // possible methods

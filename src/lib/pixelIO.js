@@ -18,7 +18,7 @@ pixelRows.get24bitPixelRow = (rowOfBytes) => {
 };
 
 pixelRows.write24bitPixelTable = (bitmap, buffer) => {
-  const ct = bitmap.colorTable;
+  const ct = bitmap.pixelArray;
   for (let row = 0; row < ct.length; row++) {
     const rowOffset = bitmap.pixelArrayLoc + (row * bitmap.rowSize);
     for (let col = 0; col < ct[row].length; col++) {

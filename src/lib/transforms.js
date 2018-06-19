@@ -7,7 +7,7 @@ trans.validTransforms = ['addBorder', 'flipH', 'flipV', 'hMirror', 'addRed', 'FB
 trans.validLength = trans.validTransforms.length - 1; 
 
 const addRed = (bitmap) => {
-  const ct = bitmap.colorTable;
+  const ct = bitmap.pixelArray;
   for (let row = 0; row < ct.length; row++) {
     for (let col = 0; col < ct[row].length; col++) {
       ct[row][col].red = 255;
@@ -16,7 +16,7 @@ const addRed = (bitmap) => {
 };
 
 const addBorder = (bitmap) => {
-  const ct = bitmap.colorTable;
+  const ct = bitmap.pixelArray;
   // top row of 5 pixels to black
   for (let row = 0; row < 5; row++) {
     for (let col = 0; col < ct[row].length; col++) {
@@ -45,7 +45,7 @@ const addBorder = (bitmap) => {
 
 const flipH = (bitmap) => {
   // reverse the pixel array along the horizontal axis
-  const ct = bitmap.colorTable;
+  const ct = bitmap.pixelArray;
   const hLine = Math.floor(bitmap.height / 2);
   let temp;
   for (let col = 0; col < bitmap.width - 1; col++) {
@@ -59,7 +59,7 @@ const flipH = (bitmap) => {
 
 const flipV = (bitmap) => {
   // reverse the pixel array along the horizontal axis POORLY ;-)
-  const ct = bitmap.colorTable;
+  const ct = bitmap.pixelArray;
   const vLine = Math.floor(bitmap.width / 2);
   let temp;
   for (let row = 0; row < bitmap.height - 1; row++) {
@@ -73,7 +73,7 @@ const flipV = (bitmap) => {
 
 const FB = (bitmap) => {
   // mirror the pixel array along the horizontal axis
-  const ct = bitmap.colorTable;
+  const ct = bitmap.pixelArray;
   const hLine = Math.floor(bitmap.height / 2);
   let temp;
   for (let col = 0; col < bitmap.width - 1; col++) {
