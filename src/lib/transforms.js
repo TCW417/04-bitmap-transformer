@@ -20,25 +20,25 @@ const addBorder = (bitmap) => {
   // top row of 5 pixels to black
   for (let row = 0; row < 5; row++) {
     for (let col = 0; col < ct[row].length; col++) {
-      ct[row][col] = { blue: 0, green: 0, red: 0 };
+      ct[row][col] = { blue: 0, green: 0, red: 255 };
     }
   }
   // bottom row of 5 pixels...
   for (let row = bitmap.height - 5; row < bitmap.height; row++) {
     for (let col = 0; col < ct[row].length; col++) {
-      ct[row][col] = { blue: 0, green: 0, red: 0 };
+      ct[row][col] = { blue: 0, green: 0, red: 255 };
     }
   }
   // left
   for (let row = 0; row < bitmap.height; row++) {
     for (let col = 0; col < 5; col++) {
-      ct[row][col] = { blue: 0, green: 0, red: 0 };
+      ct[row][col] = { blue: 0, green: 0, red: 255 };
     }
   }
   // right
   for (let row = 0; row < bitmap.height; row++) {
     for (let col = bitmap.width - 5; col < bitmap.width; col++) {
-      ct[row][col] = { blue: 0, green: 0, red: 0 };
+      ct[row][col] = { blue: 0, green: 0, red: 255 };
     }
   }
 };
