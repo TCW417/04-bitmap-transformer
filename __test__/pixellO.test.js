@@ -3,7 +3,7 @@
 const pixelRows = require('../src/lib/pixellO)');
 
 describe('testing #pixelO', () => {
-  test('row length by 8bit pixels ', () => {
+  test('rgb by 24bit pixels ', () => {
     expect()
   })
 })
